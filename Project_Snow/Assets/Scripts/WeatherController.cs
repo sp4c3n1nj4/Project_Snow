@@ -18,7 +18,7 @@ public class WeatherController : MonoBehaviour
 
 
 
-    private void Update()
+    private void UpdateFogDistance()
     {
         VolumeProfile profile = volume.sharedProfile;
         if (!profile.TryGet<Fog>(out var fog))
