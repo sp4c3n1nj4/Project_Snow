@@ -5,6 +5,13 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum State 
+    { 
+        idle,
+        moving,
+        pause
+    }
+    private State state;
     private int index = 0;
     [SerializeField]
     private ClimbingData[] climbingData;
@@ -16,24 +23,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI promptText;
 
+    private void Start()
+    {
+        ButtonPrompt(climbingData[index].keycode.ToString(), climbingData[index].position);
+    }
+
     private void Update()
     {
-        CheckPromptInput(climbingData[index].keycode);
-        CheckAnimationTimer();
+        if(state.Equals(State.idle))
+            CheckPromptInput(climbingData[index].keycode);
+        else if(state.Equals(State.moving))
+            CheckAnimationTimer();
     }
 
     private void CheckPromptInput(KeyCode key)
     {
         if (Input.GetKeyDown(key))
         {
-            AdvanceAnimation(climbingData[index].trigger.ToString());
+            AdvanceAnimation(climbingData[index].trigger.ToString());           
         }
     }
+
     private void ButtonPrompt(string key, Vector3 location)
     {
         prompt.transform.position = Camera.main.WorldToScreenPoint(location);
         promptText.text = name;
         prompt.SetActive(true);
+        state = State.idle;
     }
 
     private void CheckAnimationTimer()
@@ -48,13 +64,12 @@ public class PlayerController : MonoBehaviour
     {
         prompt.SetActive(false);
         anim.SetTrigger(name);
+        state = State.moving;
     }
 
     private void OnAnimationEnd()
     {
         float time = climbingData[index].delay;
-
-
         if (time == 0f)
         {
             index += 1;
@@ -64,12 +79,12 @@ public class PlayerController : MonoBehaviour
         {
             index += 1;
             StartCoroutine(IdleDelay(time));
-        }
-        
+        }       
     }
 
     IEnumerator IdleDelay(float time)
     {
+        state = State.pause;
         yield return new WaitForSeconds(time);
         ButtonPrompt(climbingData[index].keycode.ToString(), climbingData[index].position);
     }
