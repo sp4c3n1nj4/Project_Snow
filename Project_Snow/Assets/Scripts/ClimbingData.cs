@@ -13,12 +13,14 @@ public enum AnimationTriggers
 [Serializable]
 public class ClimbingData
 {
-    public KeyCode keycode;
+    public KeyCode keyPrompt;
 
-    public AnimationTriggers trigger;
+    public AnimationTriggers animation;
 
     public float delay;
 
     public Vector3 position;
+
+    public bool advanceDialogue;
 
 }

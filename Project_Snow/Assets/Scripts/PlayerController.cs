@@ -11,51 +11,61 @@ public class PlayerController : MonoBehaviour
         moving,
         pause
     }
+
     private State state;
     private int index = 0;
+
     [SerializeField]
     private ClimbingData[] climbingData;
-
     [SerializeField]
     private Animator anim;
     [SerializeField]
     private GameObject prompt;
     [SerializeField]
     private TextMeshProUGUI promptText;
+    [SerializeField]
+    private DialogueController controller;
 
     private void Start()
     {
-        ButtonPrompt(climbingData[index].keycode.ToString(), climbingData[index].position);
+        ButtonPrompt(climbingData[index].keyPrompt.ToString());
     }
 
     private void Update()
     {
         if(state.Equals(State.idle))
-            CheckPromptInput(climbingData[index].keycode);
+            CheckPromptInput(climbingData[index].keyPrompt, climbingData[index].position);
         else if(state.Equals(State.moving))
             CheckAnimationTimer();
     }
 
-    private void CheckPromptInput(KeyCode key)
+    private void CheckPromptInput(KeyCode key, Vector3 location)
     {
+        prompt.transform.position = Camera.main.WorldToScreenPoint(location);
+
         if (Input.GetKeyDown(key))
         {
-            AdvanceAnimation(climbingData[index].trigger.ToString());           
+            AdvanceAnimation(climbingData[index].animation.ToString());           
         }
     }
 
-    private void ButtonPrompt(string key, Vector3 location)
-    {
-        prompt.transform.position = Camera.main.WorldToScreenPoint(location);
-        promptText.text = name;
+    private void ButtonPrompt(string key)
+    {        
+        promptText.text = key;
         prompt.SetActive(true);
         state = State.idle;
+
+        if (climbingData[index].advanceDialogue)
+        {
+            controller.AdvanceDialogue();
+        }      
     }
 
     private void CheckAnimationTimer()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !anim.IsInTransition(0))
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 2 && !anim.IsInTransition(0))
         {
+            anim.SetTrigger("Idle");
             OnAnimationEnd();
         }
     }
@@ -73,7 +83,12 @@ public class PlayerController : MonoBehaviour
         if (time == 0f)
         {
             index += 1;
-            ButtonPrompt(climbingData[index].keycode.ToString(), climbingData[index].position);
+            if (climbingData.Length <= index)
+            {
+                EndOffArray();
+                return;
+            }
+            ButtonPrompt(climbingData[index].keyPrompt.ToString());
         }
         else
         {
@@ -86,7 +101,16 @@ public class PlayerController : MonoBehaviour
     {
         state = State.pause;
         yield return new WaitForSeconds(time);
-        ButtonPrompt(climbingData[index].keycode.ToString(), climbingData[index].position);
+
+        if (climbingData.Length <= index)
+            EndOffArray();
+        else
+            ButtonPrompt(climbingData[index].keyPrompt.ToString());
+    }
+
+    private void EndOffArray()
+    {
+        Debug.LogError("End of Array reached");
     }
 
 }
