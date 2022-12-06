@@ -17,6 +17,8 @@ public class ClimbingData
 
     public AnimationTriggers animation;
 
+    public int repeatAnimation;
+
     public float delay;
 
     public Vector3 position;

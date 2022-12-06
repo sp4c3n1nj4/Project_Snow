@@ -5,8 +5,21 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.VFX;
 
+[System.Serializable]
+public class WeatherData
+{
+    public float snowDensity;
+    public float snowIntensity;
+    public float fogDistance;
+}
+
 public class WeatherController : MonoBehaviour
 {
+    private int index = 0;
+
+    [SerializeField]
+    private WeatherData[] weatherData;
+
     public float snowDensity
     {
         get { return snowDensity; }
@@ -45,5 +58,12 @@ public class WeatherController : MonoBehaviour
     private void UpdateWind()
     {
         snowVFX.SetFloat(2, snowIntensity);
+    }
+
+    public void AdvanceWeather()
+    {
+        fogDistance = weatherData[index].fogDistance;
+        snowIntensity = weatherData[index].snowIntensity;
+        snowDensity = weatherData[index].snowDensity;
     }
 }

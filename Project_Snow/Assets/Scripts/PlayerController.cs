@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     private TextMeshProUGUI promptText;
     [SerializeField]
     private DialogueController controller;
+    [SerializeField]
+    private WeatherController weather;
 
     private void Start()
     {
@@ -58,13 +60,15 @@ public class PlayerController : MonoBehaviour
         if (climbingData[index].advanceDialogue)
         {
             controller.AdvanceDialogue();
+            weather.AdvanceWeather();
         }      
     }
 
     private void CheckAnimationTimer()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 2 && !anim.IsInTransition(0))
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= climbingData[index].repeatAnimation && !anim.IsInTransition(0))
         {
+            print("animation over");
             anim.SetTrigger("Idle");
             OnAnimationEnd();
         }
