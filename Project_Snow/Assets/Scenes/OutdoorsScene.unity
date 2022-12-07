@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2159.747, g: 2263.621, b: 3286.6094, a: 1}
+  m_IndirectSpecularColor: {r: 2156.788, g: 2259.4956, b: 3279.483, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1495,7 +1495,7 @@ MonoBehaviour:
   prompt: {fileID: 997816637}
   promptText: {fileID: 1444872681}
   controller: {fileID: 771776546}
-  weather: {fileID: 0}
+  weather: {fileID: 1796042445}
 --- !u!1 &1444872679
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2091,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6933b5288a7ec4542a0ce69d7536be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherData: []
+  weatherData:
+  - snowDensity: 1000
+    snowIntensity: 1
+    fogDistance: 400
   volume: {fileID: 432432460}
   snowVFX: {fileID: 1891454868}
 --- !u!1 &1823688464

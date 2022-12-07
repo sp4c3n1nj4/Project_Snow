@@ -8,8 +8,11 @@ using UnityEngine.VFX;
 [System.Serializable]
 public class WeatherData
 {
+    [Range(0, 10000)]
     public float snowDensity;
+    [Range(0,10)]
     public float snowIntensity;
+    [Range(0,500)]
     public float fogDistance;
 }
 

@@ -6,8 +6,17 @@ using System;
 [Serializable]
 public enum AnimationTriggers
 {
-    RopeClimb,
-    WallClimb
+    HangIdle,
+    HangJump,
+    HangDrop,
+    HangJumpLeft,
+    HangJumpRight,
+    HangMoveLeft,
+    HangMoveRight,
+    RopeClimbFast,
+    RopeClimbSlow,
+    RopeIdle
+
 }
 
 [Serializable]
