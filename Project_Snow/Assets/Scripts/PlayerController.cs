@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckPromptInput(KeyCode key, Vector3 location)
     {
-        prompt.transform.position = Camera.main.WorldToScreenPoint(location);
+        prompt.transform.position = Camera.main.WorldToScreenPoint(location + gameObject.transform.position);
 
         if (Input.GetKeyDown(key))
         {
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= climbingData[index].repeatAnimation && !anim.IsInTransition(0))
         {
             print("animation over");
-            anim.SetTrigger("Idle");
+            anim.SetTrigger("HangIdle");
             OnAnimationEnd();
         }
     }

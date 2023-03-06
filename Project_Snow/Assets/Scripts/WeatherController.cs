@@ -23,50 +23,34 @@ public class WeatherController : MonoBehaviour
     [SerializeField]
     private WeatherData[] weatherData;
 
-    public float snowDensity
-    {
-        get { return snowDensity; }
-        set { snowDensity = Mathf.Clamp(value, 0, 10000); UpdateSnowDensity(); }
-    }
-    public float snowIntensity
-    {
-        get { return snowIntensity; }
-        set { snowIntensity = Mathf.Clamp(value, 0, 10); UpdateWind(); }
-    }
-    public float fogDistance
-    {
-        get { return fogDistance; }
-        set { fogDistance = Mathf.Clamp(value, 0, 500); UpdateFogDistance(); }
-    }
-
     [SerializeField]
     private Volume volume;
     [SerializeField]
     private VisualEffect snowVFX;
 
-    private void UpdateFogDistance()
+    private void UpdateFogDistance(float distance)
     {
-        VolumeProfile profile = volume.sharedProfile;
-        Fog fog;
-        profile.TryGet<Fog>(out fog);
+        //VolumeProfile profile = volume.sharedProfile;
+        //Fog fog;
+        //profile.TryGet<Fog>(out fog);
 
-        fog.meanFreePath.value = fogDistance;
+        //fog.meanFreePath.value = distance;
     }
 
-    private void UpdateSnowDensity()
+    private void UpdateSnowDensity(float density)
     {
-        snowVFX.SetFloat(1, snowDensity);
+        //snowVFX.SetFloat(1, density);
     }
 
-    private void UpdateWind()
+    private void UpdateWind(float intensity)
     {
-        snowVFX.SetFloat(2, snowIntensity);
+        //snowVFX.SetFloat(2, intensity);
     }
 
     public void AdvanceWeather()
     {
-        fogDistance = weatherData[index].fogDistance;
-        snowIntensity = weatherData[index].snowIntensity;
-        snowDensity = weatherData[index].snowDensity;
+        UpdateFogDistance(weatherData[index].fogDistance);
+        UpdateSnowDensity(weatherData[index].snowDensity);
+        UpdateWind(weatherData[index].snowIntensity);
     }
 }

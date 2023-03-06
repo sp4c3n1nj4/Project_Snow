@@ -15,7 +15,8 @@ public enum AnimationTriggers
     HangMoveRight,
     RopeClimbFast,
     RopeClimbSlow,
-    RopeIdle
+    RopeIdle,
+    WallClimb
 
 }
 
