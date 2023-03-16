@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private DialogueController controller;
     [SerializeField]
     private WeatherController weather;
+    [SerializeField]
+    private EndPromptController promptCont;
 
     private void Start()
     {
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckPromptInput(KeyCode key, Vector3 location)
     {
-        prompt.transform.position = Camera.main.WorldToScreenPoint(location + gameObject.transform.position);
+        prompt.transform.position = location + gameObject.transform.position;
 
         if (Input.GetKeyDown(key))
         {
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             controller.AdvanceDialogue();
             weather.AdvanceWeather();
+            promptCont.AdvancePrompt();
         }      
     }
 

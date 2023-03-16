@@ -8,6 +8,8 @@ using UnityEngine.VFX;
 [System.Serializable]
 public class WeatherData
 {
+    public float index;
+
     [Range(0, 10000)]
     public float snowDensity;
     [Range(0,10)]
@@ -39,18 +41,26 @@ public class WeatherController : MonoBehaviour
 
     private void UpdateSnowDensity(float density)
     {
-        //snowVFX.SetFloat(1, density);
+        snowVFX.SetFloat(1, density);
     }
 
     private void UpdateWind(float intensity)
     {
-        //snowVFX.SetFloat(2, intensity);
+        snowVFX.SetFloat(2, intensity);
     }
 
     public void AdvanceWeather()
-    {
-        UpdateFogDistance(weatherData[index].fogDistance);
-        UpdateSnowDensity(weatherData[index].snowDensity);
-        UpdateWind(weatherData[index].snowIntensity);
+    {      
+        for (int i = 0; i < weatherData.Length; i++)
+        {
+            if (weatherData[i].index.Equals(index))
+            {
+                UpdateFogDistance(weatherData[i].fogDistance);
+                UpdateSnowDensity(weatherData[i].snowDensity);
+                UpdateWind(weatherData[i].snowIntensity);
+            }
+        }
+
+        index += 1;
     }
 }

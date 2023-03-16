@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IceDiffusionProfile
   m_EditorClassIdentifier: 
   profile:
-    scatteringDistance: {r: 0, g: 1, b: 0.8663819, a: 1}
+    scatteringDistance: {r: 0, g: 0.72531176, b: 1, a: 1}
     transmissionTint: {r: 0, g: 0.909328, b: 1, a: 1}
     texturingMode: 0
     transmissionMode: 1
