@@ -27,6 +27,8 @@ public class ClimbingData
 
     public AnimationTriggers animation;
 
+    public int speed = 1;
+
     public int repeatAnimation;
 
     public float delay;

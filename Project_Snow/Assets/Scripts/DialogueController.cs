@@ -6,8 +6,8 @@ using TMPro;
 [System.Serializable]
 public enum Characters
 {
-    char1,
-    char2
+    Adrian,
+    Danielle
 }
 
 [System.Serializable]

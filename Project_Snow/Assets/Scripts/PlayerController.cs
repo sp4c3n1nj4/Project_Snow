@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private WeatherController weather;
     [SerializeField]
     private EndPromptController promptCont;
+    [SerializeField]
+    private Image fadeOut;
 
     private void Start()
     {
@@ -45,11 +48,17 @@ public class PlayerController : MonoBehaviour
 
     private void CheckPromptInput(KeyCode key, Vector3 location)
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            fadeOut.gameObject.SetActive(true);
+            StartCoroutine(FadeOut(4f));
+        }
+
         prompt.transform.position = location + gameObject.transform.position;
 
         if (Input.GetKeyDown(key))
         {
-            AdvanceAnimation(climbingData[index].animation.ToString());           
+            AdvanceAnimation(climbingData[index].animation.ToString(), climbingData[index].speed);         
         }
     }
 
@@ -77,10 +86,11 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    private void AdvanceAnimation(string name)
+    private void AdvanceAnimation(string name, int speed)
     {
         prompt.SetActive(false);
         anim.SetTrigger(name);
+        anim.speed = speed;
         state = State.moving;
     }
 
@@ -120,4 +130,17 @@ public class PlayerController : MonoBehaviour
         Debug.LogError("End of Array reached");
     }
 
+
+    IEnumerator FadeOut(float time)
+    {
+        for (int i = 0; i < 255; i++)
+        {
+            yield return new WaitForSeconds(time/255);
+
+            print(i);
+            var tempColor = fadeOut.color;
+            tempColor.a = i/255f;
+            fadeOut.color = tempColor;          
+        }
+    }
 }
