@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    private void AdvanceAnimation(string name, int speed)
+    private void AdvanceAnimation(string name, float speed)
     {
         prompt.SetActive(false);
         anim.SetTrigger(name);
@@ -137,10 +137,13 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(time/255);
 
-            print(i);
+            //print(i);
             var tempColor = fadeOut.color;
             tempColor.a = i/255f;
             fadeOut.color = tempColor;          
         }
+
+        yield return new WaitForSeconds(3f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }

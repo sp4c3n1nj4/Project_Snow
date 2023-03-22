@@ -15,7 +15,7 @@ public class PromptData
 
 public class EndPromptController : MonoBehaviour
 {
-    private int index = 0;
+    private int index = -1;
 
     [SerializeField]
     private PromptData[] promptData;
@@ -26,6 +26,11 @@ public class EndPromptController : MonoBehaviour
     GameObject endPrompt;
     [SerializeField]
     TextMeshProUGUI endText;
+
+    private void Start()
+    {
+        AdvancePrompt();
+    }
 
     private void UpdatePrompt(Vector3 postion, float scale, bool capital)
     {
